@@ -57,30 +57,29 @@ function App() {
       addCard(state => ([...state, propsCard[2]]));
       setCounter(state => ({ ...state, 1: 0 }))
     } else if (counter[0] === 3) {
+      setCounter(state => ({ ...state, 0: 0 }));
       addCard(state => ([...state, ...mapCard.filter(({ id }, i, arr) => {
         if (id === 2) {
-          if ((arr[i + 1] && arr[i + 1].id === 0) && (arr[i + 2] && arr[i + 2].id === 0) && (arr[i + 3] && arr[i + 3].id === 0)) {
+          if ((arr.slice(i + 1, i + 4).every(({ id }) => id === 0))) {
             return false;
           }
         }
         return true;
-      })]))
-      setCounter(state => ({ ...state, 0: 0 }));
+      })]));
     }
-  }, [counter, mapCard])
-  console.log('ff')
+  }, [counter, mapCard]);
   return (
     <AppWrapper>
       <MainWrapp>
         <Title>Клеточное наполнение</Title>
         <CardContainer ref={ref}>
-          {mapCard.map(({ background, icon, title, discription }) => {
+          {mapCard.map(({ background, icon, title, description }) => {
             return (
               <Card
                 background={background}
                 icon={icon}
                 title={title}
-                description={discription}
+                description={description}
                 key={key++}
               />
             );
